@@ -1,5 +1,7 @@
 package ch.zli.m223.init;
 
+import java.sql.Time;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import ch.zli.m223.repository.RoleRepository;
 import ch.zli.m223.roles.UserRoles;
+import ch.zli.m223.service.booking.BookingService;
 import ch.zli.m223.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +19,7 @@ public class ServerInitialisation implements ApplicationRunner {
 
     private final UserService userService;
     private final RoleRepository roleRepository;
+    private final BookingService bookingService;
 
     @Value("${test.data.create.user:false}")
     private boolean createTestDataForUser;
@@ -30,6 +34,7 @@ public class ServerInitialisation implements ApplicationRunner {
             userService.addUser("Max", "Werner", "max@werner.com", "maxwerner");
             userService.addUser("Mini", "Max", "mini@max.com", "minimax");
             userService.addUser("Lady", "Gaga", "lady@gaga.com", "ladygaga");
+            bookingService.addBooking(true, Time.valueOf("10:00:00"), Time.valueOf("12:00:00"), 1L, true);
         }
     }
     
